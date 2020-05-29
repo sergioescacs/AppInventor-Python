@@ -5,7 +5,7 @@ window = Tk()
 
 window.geometry('305x400')
 
-canvas = Canvas(window, width = 300, height = 300, bg = "white")
+canvas = Canvas(window, width = 300, height = 375, bg = "white")
 canvas.grid(column = 0, row = 1)
 
 combo = ttk.Combobox(window, state="readonly")
