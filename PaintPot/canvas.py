@@ -2,21 +2,21 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk,Image
 
-
-color = "black"
-mein = 1
-print(color)
+global color
+color = "red"
 
 def main():
 
     window = Tk()
 
     def change1():
+        global color
         color = "red"
     def change2():
+        global color
         color = "blue"
-        print(color)
     def change3():
+        global color
         color = "green"
 
 
@@ -48,8 +48,6 @@ def main():
     combo1.grid(column = 0, row = 2)
 
     def click(event):
-        color = "blue"
-        print(mein)
         
         x, y = event.x, event.y
         x1, y1 = ( event.x - 1 ), ( event.y - 1 )
