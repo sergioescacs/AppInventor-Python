@@ -31,6 +31,7 @@ def run_game():
         screen.fill(BG_COLOUR)
         time = pygame.time.get_ticks()/1000
 
+
         def control():
             global x, position
 
@@ -41,7 +42,15 @@ def run_game():
             
             return position
 
-        screen.blit(Mole, (control()))
+        b = screen.blit(Mole, (control()))
+
+        def onClick(mouse):
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if b.collidepoint(mouse):
+                    print("Done!")
+
+
+        onClick(pygame.mouse.get_pos())
         
         pygame.display.update()
         pygame.display.flip()
