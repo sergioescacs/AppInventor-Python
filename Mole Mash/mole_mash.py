@@ -10,8 +10,8 @@ def exit_game():
 
 def run_game():
 
-    global x, position, regulator, time_data
-    x, position, regulator, time_data = 0, (0, 0), 0, 0
+    global x, position, regulator, time_data, counter
+    x, position, regulator, time_data, counter = 0, (0, 0), 0, 0, 0
     
     pygame.init()
 
@@ -39,7 +39,7 @@ def run_game():
         def update_position():
             global position
             
-            position = (randint(1, 300), randint(1, 300))
+            position = (randint(1, 300), randint(1, 350))
 
             return position
 
@@ -63,8 +63,13 @@ def run_game():
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and b.collidepoint(mouse):
             regulator = time
             x = 0
+            counter += 1
             update_position()
 
+        myfont = pygame.font.SysFont("monospace", 20)
+
+        label = myfont.render("Points: " + str(counter), 1, (0,0,0))
+        screen.blit(label, (10, 350))
         
         pygame.display.update()
         pygame.display.flip()
