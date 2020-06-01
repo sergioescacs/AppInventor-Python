@@ -1,14 +1,17 @@
-import pygame, sys, time
+import pygame, sys
+import time
 from pygame.locals import *
 from random import *
+
+
 
 def exit_game():
     sys.exit()
 
 def run_game():
 
-    global x, position
-    x, position = 3, (0, 0)
+    global x, position, regulator, time_data
+    x, position, regulator, time_data = 0, (0, 0), 0, 0
     
     pygame.init()
 
@@ -23,7 +26,6 @@ def run_game():
     
 
     while True:
-        time_passed = clock.tick(30)
         for event in pygame.event.get():
                 if event.type == QUIT:
                     quit()
@@ -31,26 +33,38 @@ def run_game():
         screen.fill(BG_COLOUR)
         time = pygame.time.get_ticks()/1000
 
+        time_data = time-regulator
+        #print(time_data)
+
+        def update_position():
+            global position
+            
+            position = (randint(1, 300), randint(1, 300))
+
+            return position
+
 
         def control():
-            global x, position
+            global x, position, regulator
 
-            if time > x:
-               
+            #print(time_data, x)
+
+            if time_data > x:
                 x += 1
-                position = (randint(1, 300), randint(1, 300))
+
+                position = update_position()
             
             return position
 
         b = screen.blit(Mole, (control()))
 
-        def onClick(mouse):
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if b.collidepoint(mouse):
-                    print("Done!")
+        mouse = pygame.mouse.get_pos()
+            
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and b.collidepoint(mouse):
+            regulator = time
+            x = 0
+            update_position()
 
-
-        onClick(pygame.mouse.get_pos())
         
         pygame.display.update()
         pygame.display.flip()
