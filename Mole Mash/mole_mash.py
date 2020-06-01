@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, time
 from pygame.locals import *
 from random import *
 
@@ -6,6 +6,10 @@ def exit_game():
     sys.exit()
 
 def run_game():
+
+    global x, position
+    x, position = 3, (0, 0)
+    
     pygame.init()
 
     SIZE = (400, 400)
@@ -16,6 +20,7 @@ def run_game():
     clock = pygame.time.Clock()
 
     Mole = pygame.image.load("Originals/mole_sprite.png")
+    
 
     while True:
         time_passed = clock.tick(30)
@@ -24,7 +29,21 @@ def run_game():
                     quit()
 
         screen.fill(BG_COLOUR)
-        screen.blit(Mole, (randint(0, 400), randint(0, 400)))
+        time = pygame.time.get_ticks()/1000
+
+        def control():
+            global x, position
+
+            if time > x:
+               
+                x += 1
+                position = (randint(1, 300), randint(1, 300))
+            
+            return position
+
+        screen.blit(Mole, (control()))
+        
+        pygame.display.update()
         pygame.display.flip()
 
 if __name__ == "__main__":
